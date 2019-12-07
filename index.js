@@ -145,7 +145,7 @@
           vertices.push(1);
         }
         for (var j=0; j < 3; j++) {
-          vertices.push(-1*cubeNormals[a][j]);
+          vertices.push(-cubeNormals[a][j]);
         }
         switch (indices[i]) {
           case a:
@@ -497,6 +497,10 @@
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       // thetaSpeed = 0.01;
       theta += thetaSpeed;
+      // Perhitungan modelMatrix untuk vektor normal
+      var nm = glMatrix.mat3.create();
+      glMatrix.mat3.normalFromMat4(nm, mm);
+      gl.uniformMatrix3fv(nmLoc, false, nm);
       if (axis[z]) glMatrix.mat4.rotateZ(mm, mm, thetaSpeed);
       if (axis[y]) glMatrix.mat4.rotateY(mm, mm, thetaSpeed);
       if (axis[x]) glMatrix.mat4.rotateX(mm, mm, thetaSpeed);
@@ -573,6 +577,23 @@
       cube.front = [curPositionCube[0], curPositionCube[1], curPositionCube[2]];
       cube.back = [curPositionCube[4], curPositionCube[5], curPositionCube[6]];
       detect(curPositionF);
+      var topFX = -10;
+      var botFX = 10;
+      var topFY = -10;
+      var botFY = 10;
+      var topFZ = -10;
+      var botFZ = 10;
+      for (var i = 0; i < curPositionF.length; i++) {
+        topFX = Math.max(curPositionF[i][0], topFX);
+        topFY = Math.max(curPositionF[i][1], topFY);
+        topFZ = Math.max(curPositionF[i][2], topFZ);
+        botFX = Math.min(curPositionF[i][0], botFX);
+        botFY = Math.min(curPositionF[i][1], botFY);
+        botFZ = Math.min(curPositionF[i][2], botFZ);
+      }
+      var dd = glMatrix.vec3.fromValues((botFX + topFX) / 2, (botFY + topFY) / 2, (botFZ + topFZ) / 2);  // xyz
+      gl.uniform3fv(ddLoc, dd);
+
       rotFY += 0.01;
       moveFX += dirFX * 0.01 ;
       moveFY += dirFY * 0.01;
@@ -587,7 +608,7 @@
       gl.disableVertexAttribArray(vColor);
       requestAnimationFrame(render);
     }
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
+    gl.clearColor(10/255, 50/255, 50/255, 1.0);
     gl.enable(gl.DEPTH_TEST);
     render();
   }
