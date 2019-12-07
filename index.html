@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Belajar WebGL</title>
+</head>
+<body>
+  <h1>
+    Fadhil Musaad (05111740000116)
+    Grafika Komputer - D
+    Tugas 4
+  </h1>
+  <div style="width: calc(50% - 265px);margin-top: auto;margin-bottom: auto">
+      <h3>Interaksi : </h3>
+                <ul>
+                    <li>Arah : Zoom - in / out </li>
+                    <li>X, Y, Z : Toogle Rotasi sumbu </li>
+                    <li>Angka 1 : Rotasi Positif</li>
+                    <li>Angka 2 : Rotasi Negatif</li>
+                    <li>Angka 0 : Diam</li>
+                </ul>
+  </div>
+  <div>
+    <canvas id="glcanvas" width="500" height="500"  style="border: none;">
+      Browser Anda tidak mendukung HTML5 <code>&lt;canvas&gt;</code>.
+    </canvas>
+  </div> 
+  <div>
+  </div>
+  <script name="shader" data-src="vertex.glsl" data-type="vertex" data-version="v1"></script>
+  <script name="shader" data-src="fragment.glsl" data-type="fragment" data-version="v1"></script>
+  <script type="text/javascript" src="libs/signals.js"></script>
+  <script type="text/javascript" src="libs/gl-matrix-min.js"></script>
+  <script type="text/javascript" src="libs/glUtils.js"></script>
+  <script type="text/javascript" src="index.js"></script>  
+</body>
+</html>
